@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Wandu\Api\ApplicationDefinition;
+use Wandu\Foundation\Application;
+use Wandu\Foundation\Kernels\ConsoleKernel;
+
+if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+    echo "cannot find autoload.php. you may run composer install.\n";
+    exit(-1);
+}
+$autoload = require_once __DIR__ . '/vendor/autoload.php';
+
+AnnotationRegistry::registerLoader([$autoload, 'loadClass']);
+
+$app = new Application(new ConsoleKernel(new ApplicationDefinition()));
+exit($app->execute());
