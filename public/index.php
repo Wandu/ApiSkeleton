@@ -10,8 +10,9 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
     exit(-1);
 }
 
-$autoload = require_once __DIR__ . '/../vendor/autoload.php';
+chdir(__DIR__ . '/..');
 
+$autoload = require_once __DIR__ . '/../vendor/autoload.php';
 AnnotationRegistry::registerLoader([$autoload, 'loadClass']);
 
 $app = new Application(new HttpRouterKernel(new ApplicationDefinition()));
