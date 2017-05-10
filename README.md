@@ -6,5 +6,5 @@ Wandu Perfect API.
 ## Installation
 
 ```sh
-php composer.phar create-project wandu/api yourpath
+php composer.phar create-project wandu/api-skeleton yourpath
 ```

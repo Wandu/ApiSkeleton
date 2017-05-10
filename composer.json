@@ -1,6 +1,6 @@
 {
-    "name": "wandu/api",
-    "description": "Wandu API",
+    "name": "wandu/api-skeleton",
+    "description": "Wandu API Skeleton",
     "keywords": [
         "wandu",
         "framework"
@@ -12,7 +12,8 @@
         }
     },
     "require": {
-        "wandu/framework": "dev-master"
+        "wandu/framework": "dev-master",
+        "lcobucci/jwt": "^3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1"
