@@ -16,6 +16,7 @@ class CreateUsers extends Migration
             $table->bigInteger('id')->unsigned()->autoIncrement();
             $table->varchar("username", 20)->unique();
             $table->varchar('password', 255)->nullable();
+            $table->set("roles")->nullable();
             $table->json('permissions')->nullable();
             $table->timestamp('created_at')->default(new RawExpression('CURRENT_TIMESTAMP'));
             $table->addColumn(new RawExpression('`updated_at` TIMESTAMP DEFAULT now() ON UPDATE now()'));

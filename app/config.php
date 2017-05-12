@@ -29,15 +29,26 @@ return [
             'path' => 'migrations',
         ],
     ],
+    'router' => [
+        'middleware' => [], // Sessionify remove
+    ],
     'session' => [
         'type' => 'file',
         'path' => 'cache/sessions',
     ],
-    'log' => [
-        'path' => null,
+
+    // for other service providers :-)
+    'monolog' => [
+        'monolog' => [
+            'path' => 'storage/log/wandu.log',
+        ],
     ],
-    'view' => [
-        'path' => 'views',
-        'cache' => 'cache/views',
+    'neomerx' => [
+        'cors-psr7' => [
+            'server-origin' => 'http://localhost:8000', // == 'http://' . config('host')
+            'allowed-origins' => ['http://allbus.dev' => true,],
+            'allowed-methods' => ['GET' => true, 'POST' => true, 'PUT' => true, 'DELETE' => true, 'OPTIONS' => true],
+            'allowed-headers' => ['X-Allbus-Key' => true,],
+        ],
     ],
 ];
