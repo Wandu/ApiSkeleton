@@ -1,4 +1,7 @@
 <?php
+use Wandu\Api\Http\Middlewares\AuthJwtToken;
+use Wandu\Router\Middleware\Cors;
+
 return [
     'env' => 'develop',
     'debug' => true,
@@ -30,7 +33,10 @@ return [
         ],
     ],
     'router' => [
-        'middleware' => [], // Sessionify remove
+        'middleware' => [
+            Cors::class,
+            AuthJwtToken::class,
+        ],
     ],
     'session' => [
         'type' => 'file',

@@ -1,11 +1,11 @@
 <?php
 namespace Wandu\Api;
 
+use Wandu\Api\Error\HttpErrorHandler;
 use Wandu\DI\ContainerInterface;
 use Wandu\DI\ServiceProviderInterface;
 use Wandu\Foundation\Contracts\HttpErrorHandlerInterface;
 use Wandu\Foundation\Contracts\KernelInterface;
-use Wandu\Foundation\Error\DefaultHttpErrorHandler;
 
 class ApplicationServiceProvider implements ServiceProviderInterface
 {
@@ -14,7 +14,7 @@ class ApplicationServiceProvider implements ServiceProviderInterface
      */
     public function register(ContainerInterface $app)
     {
-        $app->bind(HttpErrorHandlerInterface::class, DefaultHttpErrorHandler::class);
+        $app->bind(HttpErrorHandlerInterface::class, HttpErrorHandler::class);
     }
 
     /**
