@@ -1,0 +1,18 @@
+
+# server_origin: http://yourserver
+allowed_origins:
+  "*": true
+
+allowed_methods:
+  GET: true
+  POST: true
+  PUT: true
+  DELETE: true
+  OPTIONS: true
+
+allowed_headers:
+  "Content-Type": true
+  "Authorization": true
+  "Accept": true
+
+credentials_supported: true

@@ -1,6 +1,8 @@
 .idea
 composer.lock
-/app/config.php
 /vendor
-/cache
-/local_dev
+
+/storage/sessions/*
+!/storage/sessions/.gitkeep
+/storage/log/*
+!/storage/log/.gitkeep

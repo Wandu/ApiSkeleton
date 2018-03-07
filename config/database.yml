@@ -1,0 +1,19 @@
+
+migrator:
+  connection: 'default'
+  table: 'migrations'
+  path: 'migrations'
+
+connections:
+  default:
+    driver    : 'mysql'
+    host      : 'localhost'
+    database  : 'wandu'
+    username  : 'root'
+    password  : ''
+    charset   : 'utf8mb4'
+    collation : 'utf8mb4_unicode_ci'
+    prefix    : 'local_'
+    options   :
+      # if you want use timezone,
+      #1002 : "SET time_zone = '+00:00';"
