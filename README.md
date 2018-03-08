@@ -40,10 +40,6 @@ use Authorization header.
 
 - https://paw.pt/c5fFTTO3
 
-## Test
+## Todos
 
-support Unit Test(phpunit)
-
-```bash
-phpunit
-```
+- PHPUnit with Mockery (example of dependency injection.)
