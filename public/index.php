@@ -1,8 +1,7 @@
 <?php
-use Doctrine\Common\Annotations\AnnotationRegistry;
-use Wandu\Api\ApplicationDefinition;
+
+use App\Http\WebAppBootstrap;
 use Wandu\Foundation\Application;
-use Wandu\Foundation\Kernels\HttpRouterKernel;
 
 if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
     header('HTTP/1.1 500 Internal Server Error');
@@ -12,8 +11,8 @@ if (!file_exists(__DIR__ . '/../vendor/autoload.php')) {
 
 chdir(__DIR__ . '/..');
 
-$autoload = require_once __DIR__ . '/../vendor/autoload.php';
-AnnotationRegistry::registerLoader([$autoload, 'loadClass']);
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$app = new Application(new HttpRouterKernel(new ApplicationDefinition()));
+$app = new Application(new WebAppBootstrap());
+$app->setAsGlobal();
 exit($app->execute());

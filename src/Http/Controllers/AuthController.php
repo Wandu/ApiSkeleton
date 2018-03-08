@@ -1,57 +1,56 @@
 <?php
-namespace Wandu\Api\Http\Controllers;
+namespace App\Http\Controllers;
 
-use Wandu\Api\Jwt\Jwt;
-use Wandu\Api\Models\User;
-use Wandu\Database\Manager;
-use Wandu\Database\Query\SelectQuery;
+use App\Domain\Contracts\UserRepositoryInterface;
+use App\Domain\Models\User;
+use App\Http\Jwt\TokenGenerator;
+use App\Http\Transformers\UserRestifier;
 use Wandu\Http\Contracts\ParsedBodyInterface;
-use function Wandu\Http\Response\json;
+use Wandu\Restifier\Restifier;
 
 class AuthController
 {
-    /** @var \Wandu\Database\Repository\Repository */
-    protected $userRepos;
+    /** @var \App\Domain\Contracts\UserRepositoryInterface */
+    protected $userRepo;
     
-    /** @var \Wandu\Api\Jwt\Jwt */
-    protected $jwt;
+    /** @var \App\Http\Jwt\TokenGenerator */
+    protected $tokenGenerator;
     
-    public function __construct(Manager $manager, Jwt $jwt)
+    /** @var \Wandu\Restifier\Restifier */
+    protected $restifier;
+    
+    public function __construct(UserRepositoryInterface $userRepo, TokenGenerator $tokenGenerator)
     {
-        $this->userRepos = $manager->repository(User::class);
-        $this->jwt = $jwt;
+        $this->userRepo = $userRepo;
+        $this->tokenGenerator = $tokenGenerator;
+        $this->restifier = new Restifier([
+            User::class => new UserRestifier(),
+        ]);
     }
 
-    public function login(ParsedBodyInterface $parsedBody)
+    public function register(ParsedBodyInterface $params)
     {
-        $username = $parsedBody->get('username');
-        $password = $parsedBody->get('password');
-        if (!$username || !$password) {
-            return json([
-                'success' => false,
-                'message' => 'username, password required.',
-            ], 400);
-        }
-
-        /** @var \Wandu\Api\Models\User $user */
-        $user = $this->userRepos->first(function (SelectQuery $query) use ($username) {
-            return $query->where('username', $username);
-        });
-        if (!$user || !$user->validPassword($password)) {
-            return json([
-                'success' => false,
-                'message' => 'user not exists.',
-            ], 400);
-        }
-        // will be transformer
-        $token = $this->jwt->generate([
-            'user' => [
-                'id' => $user->getIdentifier(),
-            ],
-        ]);
+        $user = $this->userRepo->register(
+            $params->get('email'),
+            $params->get('password')
+        );
         return [
             'success' => true,
-            'token' => $token,
+            'token' => $this->tokenGenerator->generate($user),
+            'user' => $this->restifier->restify($user),
+        ];
+    }
+    
+    public function login(ParsedBodyInterface $params)
+    {
+        $user = $this->userRepo->findByEmailAndPassword(
+            $params->get("email"),
+            $params->get("password")
+        );
+        return [
+            'success' => true,
+            'token' => $this->tokenGenerator->generate($user),
+            'user' => $this->restifier->restify($user),
         ];
     }
 }

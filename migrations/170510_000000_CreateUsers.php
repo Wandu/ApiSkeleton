@@ -1,35 +1,31 @@
 <?php
 
-use Wandu\Database\Contracts\ConnectionInterface;
-use Wandu\Database\Migrator\Migration;
-use Wandu\Database\Query\CreateQuery;
-use Wandu\Database\Query\Expression\RawExpression;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\Builder;
+use Wandu\Service\Eloquent\Migration;
 
-class CreateUsers extends Migration 
+class CreateUsers extends Migration
 {
     /**
-     * {@inheritdoc}
+     * @param \Illuminate\Database\Schema\Builder $schema
      */
-    public function migrate(ConnectionInterface $connection)
+    public function migrate(Builder $schema)
     {
-        $connection->query($connection->createQueryBuilder('users')->create(function (CreateQuery $table) {
-            $table->bigInteger('id')->unsigned()->autoIncrement();
-            $table->varchar("username", 20)->unique();
-            $table->varchar('password', 255)->nullable();
-            $table->set("roles")->nullable();
-            $table->json('permissions')->nullable();
-            $table->timestamp('created_at')->default(new RawExpression('CURRENT_TIMESTAMP'));
-            $table->addColumn(new RawExpression('`updated_at` TIMESTAMP DEFAULT now() ON UPDATE now()'));
-
-            $table->primaryKey('id');
-        }));
+        $schema->create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('email', 100)->unique();
+            $table->string('password', 100);
+            $table->string('name', 100)->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Illuminate\Database\Schema\Builder $schema
      */
-    public function rollback(ConnectionInterface $connection)
+    public function rollback(Builder $schema)
     {
-        $connection->query($connection->createQueryBuilder('users')->drop());
+        $schema->dropIfExists('users');
     }
 }

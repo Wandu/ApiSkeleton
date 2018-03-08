@@ -1,8 +1,8 @@
 <?php
-namespace Wandu\Api\Error;
+namespace App\Http\Error;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Wandu\Foundation\Error\DefaultHttpErrorHandler;
+use Wandu\Foundation\WebApp\DefaultHttpErrorHandler;
 use Wandu\Validator\Exception\InvalidValueException;
 use function Wandu\Http\Response\json;
 
@@ -17,6 +17,9 @@ class HttpErrorHandler extends DefaultHttpErrorHandler
         40001 => InvalidValueException::class,
     ];
 
+    /**
+     * {@inheritdoc}
+     */
     public function handle(ServerRequestInterface $request, $exception)
     {
         if ($exception instanceof InvalidValueException) {
