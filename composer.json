@@ -11,9 +11,10 @@
             "App\\": "src/"
         }
     },
+    "minimum-stability": "beta",
     "require": {
         "php": ">=7.1",
-        "wandu/framework": "dev-master",
+        "wandu/framework": "4.0.*",
         "neomerx/cors-psr7": "^1.0",
         "monolog/monolog": "^1.22",
         "firebase/php-jwt": "^5.0",
