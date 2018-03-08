@@ -6,8 +6,11 @@ Wandu Framework API Skeleton.
 
 - Log : `monolog/monolog:^1.22`
 - Database : `illuminate/database:^5.6`
-- API Auth : using JWT, `firebase/php-jwt:^5.0`
-- CORS : `neomerx/cors-psr7:^1.0`
+- HTTP
+  - JWT : `firebase/php-jwt:^5.0`
+  - CORS : `neomerx/cors-psr7:^1.0`
+- Validation
+  - Email : `egulias/email-validator`
 
 ## Installation
 
@@ -20,6 +23,22 @@ composer create-project wandu/api-skeleton yourpath
 ```bash
 php wandu migrator:migrate
 ```
+
+## Predefined Controller
+
+### Register
+
+- https://paw.pt/c5fFBamQ
+
+### Login
+
+- https://paw.pt/c5fFPMTE
+
+### My Page
+
+use Authorization header.
+
+- https://paw.pt/c5fFTTO3
 
 ## Test
 

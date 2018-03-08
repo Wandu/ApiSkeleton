@@ -21,7 +21,8 @@ class RestRouting
 
             $router->post("/register", AuthController::class, "register")
                 ->middleware(Middleware\Validation\RegisterRequest::class);
-            $router->post("/login", AuthController::class, "login");
+            $router->post("/login", AuthController::class, "login")
+                ->middleware(Middleware\Validation\LoginRequest::class);
         });
         $router->middleware(Middleware\AuthGuard::class, function (Routable $router) {
             $router->get("/mypage", MyPageController::class, "index");
